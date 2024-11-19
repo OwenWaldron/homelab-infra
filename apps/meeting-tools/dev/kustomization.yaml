@@ -1,25 +1,30 @@
+namePrefix: dev-
+namespace: meeting-tools-test
+
 resources:
   - ./../base
   - ./ingress.yaml
-namePrefix: dev-
-namespace: meeting-tools
+
+patches:
+  - path: ./secret-ref.yaml
+  - path: ./volumes.yaml
+
 images:
-  - name: meeting-tools-backend-dev
-    newName: ghcr.io/marquescg/meeting-tools-backend-dev
-    newTag: fdd6594ed9849c0480a795a26a67f6d74356fdac
-  - name: meeting-tools-frontend-dev
-    newName: ghcr.io/marquescg/meeting-tools-frontend-dev
-    newTag: fdd6594ed9849c0480a795a26a67f6d74356fdac
-  - name: meeting-tools-directory-watcher
-    newName: ghcr.io/marquescg/meeting-tools-directory-watcher
-    newTag: fdd6594ed9849c0480a795a26a67f6d74356fdac
-  - name: meeting-tools-worker
-    newName: ghcr.io/marquescg/meeting-tools-worker
-    newTag: fdd6594ed9849c0480a795a26a67f6d74356fdac
+  - name: meeting-tools-backend
+    newName: ghcr.io/marquescg/meeting-tools-backend
+    newTag: ab65ba1d95644603ce15c5b4ab42ee3eda32test
+  - name: meeting-tools-frontend
+    newName: ghcr.io/marquescg/meeting-tools-frontend
+    newTag: ab65ba1d95644603ce15c5b4ab42ee3eda32test
+  - name: meeting-tools-diarization
+    newName: ghcr.io/marquescg/meeting-tools-diarization
+    newTag: ab65ba1d95644603ce15c5b4ab42ee3eda32tesy
+
 configMapGenerator:
   - name: meeting-tools-config
     literals:
-      - backendurl=http://dev-backend-service
+      - backendurl=http://dev.meeting_tools.marquescg.com/api
+      - backendurlinternal=http://dev-backend-service.meeting-tools-test.svc.cluster.local:8000
       - rabbitmq=amqp://guest:guest@rabbitmq:5672
       - modelfile=/app/whisper-models/ggml-base.en.bin
       - data=/app/data

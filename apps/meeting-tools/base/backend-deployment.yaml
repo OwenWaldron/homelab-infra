@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: meeting-tools-backend-dev:latest
+          image: meeting-tools-backend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
@@ -37,6 +37,11 @@ spec:
                 secretKeyRef:
                   name: meeting-tools-secrets
                   key: jwt
+            - name: INTERFACE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: meeting-tools-secrets
+                  key: interface
           volumeMounts:
             - name: data-volume
               mountPath: /app/data
@@ -44,7 +49,7 @@ spec:
         - name: data-volume
           nfs:
             server: 192.168.0.71
-            path: /main/plex/meeting-tools/data
+            path: /main/plex/meeting-tools/prod/data
       imagePullSecrets:
         - name: gchrio-cred
 ---

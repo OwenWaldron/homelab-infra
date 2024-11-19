@@ -17,16 +17,16 @@ spec:
         - name: gchrio-cred
       containers:
         - name: frontend
-          image: meeting-tools-frontend-dev:latest
+          image: meeting-tools-frontend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
           env:
             - name: REACT_APP_BACKEND_URL
               valueFrom:
-              configMapKeyRef:
-                name: meeting-tools-config
-                key: backendurl
+                configMapKeyRef:
+                  name: meeting-tools-config
+                  key: backendurl
 ---
 apiVersion: v1
 kind: Service

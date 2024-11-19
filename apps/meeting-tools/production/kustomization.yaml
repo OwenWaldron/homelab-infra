@@ -1,8 +1,11 @@
 resources:
   - ./../base
   - ./ingress.yaml
+
 namePrefix: prod-
+
 namespace: meeting-tools
+
 images:
   - name: meeting-tools-backend-dev
     newName: ghcr.io/marquescg/meeting-tools-backend
@@ -10,16 +13,15 @@ images:
   - name: meeting-tools-frontend-dev
     newName: ghcr.io/marquescg/meeting-tools-frontend
     newTag: 0e8d4f416c1c89991cfdcbfc0d106fa3a381f904
-  - name: meeting-tools-directory-watcher
+  - name: meeting-tools-diarization
     newName: ghcr.io/marquescg/meeting-tools-directory-watcher
     newTag: 0e8d4f416c1c89991cfdcbfc0d106fa3a381f904
-  - name: meeting-tools-worker
-    newName: ghcr.io/marquescg/meeting-tools-worker
-    newTag: 0e8d4f416c1c89991cfdcbfc0d106fa3a381f904
+
 configMapGenerator:
   - name: meeting-tools-config
     literals:
-      - backendurl=http://prod-backend-service
+      - backendurl=https://meeting_tools.marquescg.com/api
+      - backendurlinternal=http://prod-backend-service.meeting-tools.svc.cluster.local:8000
       - rabbitmq=amqp://guest:guest@rabbitmq:5672
       - modelfile=/app/whisper-models/ggml-base.en.bin
       - data=/app/data
